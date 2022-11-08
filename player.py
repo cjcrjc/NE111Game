@@ -1,25 +1,35 @@
 from pygame import *
 from constants import *
+from wall import *
 
 class Player(sprite.Sprite):
-    def __init__(self):
-        super().__init__()
+
+    # initiallizing the player
+    def __init__(self, group, x, y):
+        super().__init__(group)
         #here is where we define character graphics for now its basic
-        self.image = Surface((15,15))
-        #self.image.fill(RED)
+        self.image = Surface((TILESIZE, TILESIZE))
+        self.image.fill(RED)
         self.rect = self.image.get_rect()
-        self.rect.center = (SCREENWIDTH/2,SCREENHEIGHT/2)
+        self.rect.topleft = (x * TILESIZE, y * TILESIZE)
+        self.x = x
+        self.y = y
+        self.dx = 0
+        self.dy = 0
 
-    def draw(self, output_display):
-        output_display.blit(self.image, self.rect)
+    #checks for collisions between player and wall sprites in future direction
+    def check_collide(self):
+        for object in self.groups()[0]:
+            if isinstance(object, Wall) and (object.x == self.x + self.dx and object.y == self.y + self.dy):
+                return True
+        return False
 
+    # makes the player coordinates into actual sprite properties
+    def make_cam_pos(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+    #self explanatory
     def move(self):
-        keys_pressed = key.get_pressed()
-        if (keys_pressed[K_w] or keys_pressed[K_UP]) and self.rect.y >= 0:
-            self.rect.y -= MOVESPEED
-        if (keys_pressed[K_s] or keys_pressed[K_DOWN]) and self.rect.y <= (SCREENHEIGHT - self.rect.width):
-            self.rect.y += MOVESPEED
-        if (keys_pressed[K_a] or keys_pressed[K_LEFT]) and self.rect.x >= 0:
-            self.rect.x -= MOVESPEED
-        if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and self.rect.x <= (SCREENWIDTH - self.rect.height):
-            self.rect.x += MOVESPEED
+        self.x += self.dx
+        self.y += self.dy
