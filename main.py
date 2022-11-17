@@ -1,4 +1,4 @@
-#Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (Dsmth or other)
+#Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (DL or other)
 
 #Imports
 import pygame.event
