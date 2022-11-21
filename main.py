@@ -9,6 +9,10 @@ from player import *
 from wall import *
 from os import path
 
+#SK: import pytmx to manipulate and interpret the tilemap files 
+#being used for the game map
+import pytmx as tm
+
 #Loading in map file
 map_setup = []
 map_file = open(path.join(path.dirname(__file__), 'map.txt'))
