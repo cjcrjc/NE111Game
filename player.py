@@ -1,8 +1,10 @@
 from pygame import *
 from constants import *
+from enemy import *
 from wall import *
 
 class Player(sprite.Sprite):
+
 
     # initiallizing the player
     def __init__(self, group, x, y):
@@ -16,6 +18,9 @@ class Player(sprite.Sprite):
         self.y = y
         self.dx = 0
         self.dy = 0
+
+        # SSL Adding Player characteristics
+        self.health = PLAYERHEALTH
 
     #checks for collisions between player and wall sprites in future direction
     def check_collide(self):
@@ -33,3 +38,9 @@ class Player(sprite.Sprite):
     def move(self):
         self.x += self.dx
         self.y += self.dy
+
+# SSL
+# when player and enemy are within certain distance, freeze both and make them fight each other
+def should_start_battle(self, enemy):
+    # Detect proximity with enemy to decide if battle starts
+    return False
