@@ -71,6 +71,12 @@ while running:
         if prev_pos != player.x*3 + player.y:
             movable = False
             time.set_timer(movable_event, MOVESPEED)
+
+        # SSL Check if the player and enemy is within proximity to fight
+        # if player.should_start_battle(enemy):
+            # Do the Battely stuff here
+            # todo
+
     #updates rect of each sprite to resolution coords not grid coords
     for sprite in camera_group:
         sprite.make_cam_pos()
