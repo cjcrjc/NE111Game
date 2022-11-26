@@ -8,10 +8,8 @@ from camera import *
 from player import *
 from wall import *
 from os import path
-
-#SK: import pytmx to manipulate and interpret the tilemap files 
-#being used for the game map
 import pytmx as tm
+from tilemap import *
 
 #Loading in map file
 map_setup = []
@@ -40,6 +38,7 @@ for row in map_setup:
             player = Player(camera_group, entrynum, rownum)
         entrynum += 1
     rownum += 1
+
 
 #game logic in loop for while the game is running
 while running:
