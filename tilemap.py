@@ -20,5 +20,21 @@ class TiledMap:
         self.tmxdata = tm
     
     def render(self, surface):
-        #this function will take the map .tmx file and read the txt file
-        pass
+        #this function will take the map .tmx file and read the .txt file
+        #first, make a variable for taking a tile by its global id, less writing
+        ti = self.tmxdata.get_tile_image_by_gid
+        #run through each visible layer in the .tmx file
+        for layer in self.tmxdata.visible.layers:
+            if isinstance(layer, pytmx.TiledTileLayer):
+                #run through each tile in the layer
+                for x, y, gid, in layer:
+                    tile = ti(gid)
+                    #if the tile is a visible tile, we draw it
+                    if tile:
+                        surface.blit(tile, (x*self.tmx.tilewidth, y*self.tmx.tileheight))
+
+    #make a final function in the class to make the map as temp_surface variable
+    def make_map(self):
+        temp_surface = pg.Surface((self.width,self.height))
+        self.render(temp_surface)
+        return temp_surface
