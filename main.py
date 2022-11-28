@@ -1,6 +1,6 @@
 #Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (DL or other)
 
-#Imports
+#Imports#
 import pygame.event
 from pygame import *
 from constants import *
@@ -10,12 +10,6 @@ from wall import *
 from os import path
 import pytmx as tm
 from tilemap import *
-
-#Loading in map file
-map_setup = []
-map_file = open(path.join(path.dirname(__file__), 'map.txt'))
-for line in map_file:
-    map_setup.append(line)
 
 #Variable Setup
 running = True
@@ -27,17 +21,24 @@ camera_group = CameraGroup()
 movable_event = USEREVENT + 1
 movable = True
 
-#Map Setup
-rownum = 0
-for row in map_setup:
-    entrynum = 0
-    for entry in row:
-        if entry == 'W':
-            Wall(camera_group, entrynum, rownum)
-        elif entry == 'P':
-            player = Player(camera_group, entrynum, rownum)
-        entrynum += 1
-    rownum += 1
+#Loading in map file
+# map_setup = []
+# map_file = open(path.join(path.dirname(__file__), 'map.txt'))
+# for line in map_file:
+#    map_setup.append(line)
+#Map setup#
+# rownum = 0
+# for row in map_setup:
+#     entrynum = 0
+#     for entry in row:
+#         if entry == 'W':
+#             Wall(camera_group, entrynum, rownum)
+#         elif entry == 'P':
+#             player = Player(camera_group, entrynum, rownum)
+#         entrynum += 1
+#     rownum += 1
+map = TileMap("map1.tmx")
+player = Player(camera_group, 1, 1)
 
 
 #game logic in loop for while the game is running
@@ -83,6 +84,7 @@ while running:
 #draw logic
     Display.fill(BG_COLOUR)
     #camera_group.draw(Display)
+    map.render(Display)
     camera_group.custom_draw(player)
     camera_group.draw_grid()
     display.update()
