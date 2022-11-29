@@ -1,4 +1,4 @@
-#Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (DL or other)
+#Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (DL)
 
 #Imports#
 import pygame.event
@@ -9,6 +9,8 @@ from player import *
 from wall import *
 from os import path
 from pytmx import *
+from tilemap import *
+from pytmx.util_pygame import load_pygame
 
 #Variable Setup
 running = True
@@ -19,6 +21,7 @@ FPS = time.Clock()
 camera_group = CameraGroup()
 movable_event = USEREVENT + 1
 movable = True
+tmxdata = load_pygame('demomap.tmx')
 
 #Loading in map file
 map_setup = []
@@ -80,7 +83,9 @@ while running:
 
 #draw logic
     Display.fill(BG_COLOUR)
+    blit_all_tiles(Display,tmxdata,CameraGroup.offset_pos)
     #camera_group.draw(Display)
+    #Display.blit(map_img,camera_group.apply_rect(map_rect))
     camera_group.custom_draw(player)
     camera_group.draw_grid()
     display.update()

@@ -6,37 +6,20 @@
 from pytmx import *
 from constants import *
 from pygame import *
+from main import *
+from camera import *
 
 #create a map class that loads the .tmx map files from
 #Tiled, the tilemap editor and creator.
-class TileMap:
-    def __init__(self, filename):
-        #this function initializes the map file, and the variable (tm)
-        #created loads the .tmx map file with pygame.
-        tm = load_pygame(filename)
-        #set the size of the map, which is 100 tiles * 16 pixels/tile
-        self.width = tm.width * tm.tilewidth
-        #set the tile height of the map, which is 80 tiles * 16 pixels/tile
-        self.height = tm.height * tm.tileheight
-        #create a variable to store this initialization
-        self.tmxdata = tm
-    
-    def render(self, surface):
-        #this function will take the map .tmx file and read the .txt file
-        #first, make a variable for taking a tile by its global id, less writing
-        ti = self.tmxdata.get_tile_image_by_gid()
-        #run through each visible layer in the .tmx file
-        for layer in self.tmxdata.layers:
-            if isinstance(layer, TiledTileLayer):
-                #run through each tile in the layer
-                for x, y, gid, in layer:
-                    tile = self.tmxdata.get_tile_image_by_gid(gid)
-                    #if the tile is a visible tile, we draw it
-                    if tile:
-                        surface.blit(tile, (x, y))
 
-    #make a final function in the class to make the map as temp_surface variable
-    def make_map(self):
-        temp_surface = Surface((self.width,self.height))
-        self.render(temp_surface)
-        return temp_surface
+def blit_all_tiles(Display,tmxdata,offset_pos):
+    #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
+    for layer in tmxdata:
+        for tile in layer.tiles():
+            #tile[0] is the x location on the gird
+            #tile[1] is the y location
+            #tile[2] is the image data for blitting
+            x_pixel = tile[0] * TILESIZE + offset_pos[0]
+            y_pixel = tile[1] * TILESIZE + offset_pos[1]
+            Display.blit(tile[2], (x_pixel,y_pixel))
+
