@@ -1,7 +1,6 @@
 from pygame import *
 from constants import *
 from pytmx import *
-from tilemap import *
 
 
 class CameraGroup(sprite.Group):
@@ -22,10 +21,7 @@ class CameraGroup(sprite.Group):
 
     def draw_grid(self):
         #draws x and y lines seperated by tilesize
-        for x in range(0, SCREENWIDTH, TiledMap.width):
+        for x in range(0, 3200, TILESIZE):
             draw.line(display.get_surface(), GREY, (x - self.offset.x, 0), (x - self.offset.x, SCREENHEIGHT))
-        for y in range(0, SCREENHEIGHT, TiledMap.height):
+        for y in range(0, 3200, TILESIZE):
             draw.line(display.get_surface(), GREY, (0, y - self.offset.y), (SCREENWIDTH, y - self.offset.y))
-
-    def apply_rect(self,rect):
-        return rect.move(self.camera_group.topleft)
