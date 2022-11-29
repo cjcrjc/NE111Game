@@ -23,7 +23,7 @@ movable = True
 camera_group = CameraGroup()
 tmxdata = load_pygame('demomap.tmx')
 player = Player(camera_group, 1, 1)
-world_offset = [0,0]
+world_offset = [10,10]
 
 def blit_all_tiles(Display,tmxdata,world_offset):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
@@ -32,9 +32,10 @@ def blit_all_tiles(Display,tmxdata,world_offset):
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
                 #tile[2] is the image data for blitting
+                img = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
                 x_pixel = tile[0] * TILESIZE + world_offset[0]
                 y_pixel = tile[1] * TILESIZE + world_offset[1]
-                Display.blit(tile[2], (x_pixel,y_pixel))
+                Display.blit(img, (x_pixel,y_pixel))
 
 # #Loading in map file
 # map_setup = []
@@ -100,7 +101,7 @@ while running:
     blit_all_tiles(Display,tmxdata,world_offset)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
-    camera_group.draw_grid()
+    #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)
 
