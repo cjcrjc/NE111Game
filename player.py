@@ -10,10 +10,10 @@ class Player(sprite.Sprite):
     def __init__(self, group, x, y):
         super().__init__(group)
         #here is where we define character graphics for now its basic
-        self.image = Surface((TILESIZE, TILESIZE))
+        self.image = Surface((16, 16))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x * TILESIZE, y * TILESIZE)
+        self.rect.topleft = (x * 16, y * 16)
         self.x = x
         self.y = y
         self.dx = 0
