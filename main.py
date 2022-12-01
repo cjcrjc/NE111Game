@@ -29,7 +29,7 @@ def blit_all_tiles(Display,tmxdata,world_offset,target):
         tile_offset = math.Vector2()
         tile_offset.x = target.rect.centerx - SCREENWIDTH/2 - TILESIZE/2
         tile_offset.y = target.rect.centery - SCREENHEIGHT/2 - TILESIZE/2
-        for layer.id in tmxdata:
+        for layer in tmxdata:
             for tile in layer.tiles():
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
