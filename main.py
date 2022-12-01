@@ -9,7 +9,6 @@ from player import *
 from wall import *
 from os import path
 from pytmx import *
-from tilemap import *
 from pytmx.util_pygame import load_pygame
 
 #Variable Setup
@@ -23,14 +22,14 @@ movable = True
 camera_group = CameraGroup()
 tmxdata = load_pygame('demomap.tmx')
 player = Player(camera_group, 1, 1)
-world_offset = [10,10]
+world_offset = [0,0]
 
 def blit_all_tiles(Display,tmxdata,world_offset,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
         tile_offset = math.Vector2()
         tile_offset.x = target.rect.centerx - SCREENWIDTH/2 - TILESIZE/2
         tile_offset.y = target.rect.centery - SCREENHEIGHT/2 - TILESIZE/2
-        for layer in tmxdata:
+        for layer.id in tmxdata:
             for tile in layer.tiles():
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
@@ -101,7 +100,7 @@ while running:
 #draw logic
     Display.fill(BG_COLOUR)
     #SK: blit the tiles from the .tmx file on top of display 
-    blit_all_tiles(Display,tmxdata,world_offset,player)
+    blit_all_tiles(Display,tmxdata,world_offset,player,target)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
     #camera_group.draw_grid()

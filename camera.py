@@ -21,7 +21,7 @@ class CameraGroup(sprite.Group):
 
     def draw_grid(self):
         #draws x and y lines seperated by tilesize
-        for x in range(0, 3200, TILESIZE):
+        for x in range(0, 1600, TILESIZE):
             draw.line(display.get_surface(), GREY, (x - self.offset.x, 0), (x - self.offset.x, SCREENHEIGHT))
-        for y in range(0, 3200, TILESIZE):
+        for y in range(0, 1600, TILESIZE):
             draw.line(display.get_surface(), GREY, (0, y - self.offset.y), (SCREENWIDTH, y - self.offset.y))

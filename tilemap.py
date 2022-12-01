@@ -3,10 +3,10 @@
 #imports needed for map creation and for reading tilemap files
 #import pytmx to manipulate and interpret the tilemap files
 #being used for the game map
-from pytmx import *
-from constants import *
-from pygame import *
-from main import *
+# from pytmx import *
+# from constants import *
+# from pygame import *
+# from main import *
 
 #create a map class that loads the .tmx map files from
 #Tiled, the tilemap editor and creator.
