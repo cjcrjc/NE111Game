@@ -1,4 +1,4 @@
-#Group is Cameron (CC), Sam (SK), Sophia, (SSL), Dev (DL)
+#Group is Cameron Chin (CC), Sam Krysko (SK), Sophia St. Laurent (SSL), Devaney Lakshman(DL)
 
 #Imports#
 import pygame.event
@@ -34,11 +34,13 @@ player = Player(camera_group, 1, 1)
 # ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
 # ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
 
+#created by SK, debugged by CC
 def blit_all_tiles(tmxdata,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
         tile_offset = math.Vector2()
         tile_offset.x = target.rect.centerx - SCREENWIDTH/2
         tile_offset.y = target.rect.centery - SCREENHEIGHT/2
+        #runs through every layer in the .tmx files, and, then runs through every tile and blits it on the display
         for layers in tmxdata:
             for tile in layers.tiles():
                 #tile[0] is the x location on the gird
@@ -48,6 +50,7 @@ def blit_all_tiles(tmxdata,target):
                 #tile_image = tile[2]
                 x_pixel = tile[0] * TILESIZE - tile_offset.x
                 y_pixel = tile[1] * TILESIZE - tile_offset.y
+                #the actual blit command
                 display.get_surface().blit(tile_image, (x_pixel,y_pixel))
 
 # #Loading in map file
@@ -110,7 +113,7 @@ while running:
 
 #draw logic
     Display.fill(BG_COLOUR)
-    #SK: blit the tiles from the .tmx file on top of display 
+    #SK: blit the tiles from the .tmx file on the display 
     blit_all_tiles(tmxdata,player)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
