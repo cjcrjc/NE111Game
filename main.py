@@ -23,8 +23,6 @@ camera_group = CameraGroup()
 tmxdata = load_pygame('demomap.tmx')
 player = Player(camera_group, 1, 1)
 
-world_offset = [0,0]
-
 #example
 #SSL added to this
 # This shows how you can create a list of enemies.  First it creates a list with the first enemy
@@ -36,7 +34,7 @@ world_offset = [0,0]
 # ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
 # ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
 
-def blit_all_tiles(Display,tmxdata,world_offset,target):
+def blit_all_tiles(tmxdata,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
         tile_offset = math.Vector2()
         tile_offset.x = target.rect.centerx - SCREENWIDTH/2
@@ -48,9 +46,9 @@ def blit_all_tiles(Display,tmxdata,world_offset,target):
                 #tile[2] is the image data for blitting
                 tile_image = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
                 #tile_image = tile[2]
-                x_pixel = tile[0] * TILESIZE + world_offset[0] - tile_offset.x
-                y_pixel = tile[1] * TILESIZE + world_offset[1] - tile_offset.y
-                Display.blit(tile_image, (x_pixel,y_pixel))
+                x_pixel = tile[0] * TILESIZE - tile_offset.x
+                y_pixel = tile[1] * TILESIZE - tile_offset.y
+                display.get_surface().blit(tile_image, (x_pixel,y_pixel))
 
 # #Loading in map file
 # map_setup = []
@@ -113,7 +111,7 @@ while running:
 #draw logic
     Display.fill(BG_COLOUR)
     #SK: blit the tiles from the .tmx file on top of display 
-    blit_all_tiles(Display,tmxdata,world_offset,player)
+    blit_all_tiles(tmxdata,player)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
     camera_group.draw_grid()
