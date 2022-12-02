@@ -39,8 +39,8 @@ def blit_all_tiles(tmxdata,target):
         tile_offset = math.Vector2()
         tile_offset.x = target.rect.centerx - SCREENWIDTH/2
         tile_offset.y = target.rect.centery - SCREENHEIGHT/2
-        for layer in tmxdata:
-            for tile in layer.tiles():
+        for layers in tmxdata:
+            for tile in layers.tiles():
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
                 #tile[2] is the image data for blitting
