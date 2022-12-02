@@ -22,7 +22,21 @@ movable = True
 camera_group = CameraGroup()
 tmxdata = load_pygame('demomap.tmx')
 player = Player(camera_group, 1, 1)
+
 world_offset = [0,0]
+
+#example
+#SSL added to this
+# This shows how you can create a list of enemies.  First it creates a list with the first enemy
+# Then is adds a second enemy to the list with .append().
+# The reason for this example is if the enemies get read from the map file it might be good to have a list of
+# all the enemies later.  Don't know if it's helpful but tried it
+
+# get_mob_type creates a random number that is used to decide what type of mob to create
+# ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
+# ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
+
+
 
 def blit_all_tiles(Display,tmxdata,world_offset,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
@@ -106,4 +120,3 @@ while running:
     #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)
-

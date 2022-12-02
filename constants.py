@@ -17,10 +17,21 @@ BG_COLOUR = (14,135,204)  # BLUEISH WATER COLOUR
 
 #HEALTH CONSTANTS SSL
 PLAYERHEALTH = 100 #both have same health but will have different dmg and swing rates
-ENEMYHEALTH = 100
 
 #BATTLE CONSTANTS SSL
 PLAYERHITDMG = 30 #how fast player swings sword, faster than enemy
-ENEMYHITDMG = 10 #im thinking swords cuz thats cool, like how fast enemy swings sword
 PLAYERHITRATE = 100 #how fast player can hit enemy in battle sequence
-ENEMYHITRATE = 200 #how fast enemy can hit player in battle sequence, enemy hits slower than player
+
+#SSL MOB CONSTANTS
+MOB_HEALTH = 0
+MOB_DAMAGE = 1
+MOB_HIT_RATE = 2
+
+#SSL MOB TYPE 1
+MOB1 = (100, 10, 200)
+#SSL MOB TYPE 2
+MOB2 = (125, 30, 300)
+#SSL MOB TYPE 3
+MOB3 = (75, 10, 150)
+
+TYPES_OF_MOBS = [MOB1, MOB2, MOB3]

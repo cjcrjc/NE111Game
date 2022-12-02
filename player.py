@@ -44,3 +44,17 @@ class Player(sprite.Sprite):
 def should_start_battle(self, enemy):
     # Detect proximity with enemy to decide if battle starts
     return False
+
+#SSL
+def take_damage(damage):
+    if (damage >= self.health):
+        self.damage = 0
+    else:
+        self.health - damage
+
+#SSL
+def is_dead():
+    if self.health = 0:
+        return True
+    else:
+        return False
