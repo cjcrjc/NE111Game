@@ -36,22 +36,21 @@ world_offset = [0,0]
 # ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
 # ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
 
-
-
 def blit_all_tiles(Display,tmxdata,world_offset,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
         tile_offset = math.Vector2()
-        tile_offset.x = target.rect.centerx - SCREENWIDTH/2 - TILESIZE/2
-        tile_offset.y = target.rect.centery - SCREENHEIGHT/2 - TILESIZE/2
+        tile_offset.x = target.rect.centerx - SCREENWIDTH/2
+        tile_offset.y = target.rect.centery - SCREENHEIGHT/2
         for layer in tmxdata:
             for tile in layer.tiles():
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
                 #tile[2] is the image data for blitting
-                img = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
+                tile_image = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
+                #tile_image = tile[2]
                 x_pixel = tile[0] * TILESIZE + world_offset[0] - tile_offset.x
                 y_pixel = tile[1] * TILESIZE + world_offset[1] - tile_offset.y
-                Display.blit(img, (x_pixel,y_pixel))
+                Display.blit(tile_image, (x_pixel,y_pixel))
 
 # #Loading in map file
 # map_setup = []
@@ -114,9 +113,9 @@ while running:
 #draw logic
     Display.fill(BG_COLOUR)
     #SK: blit the tiles from the .tmx file on top of display 
-    blit_all_tiles(Display,tmxdata,world_offset,player,target)
+    blit_all_tiles(Display,tmxdata,world_offset,player)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
-    #camera_group.draw_grid()
+    camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)
