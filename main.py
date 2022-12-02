@@ -1,30 +1,32 @@
-#Group is Cameron Chin (CC), Sam Krysko (SK), Sophia St. Laurent (SSL), Devaney Lakshman(DL)
+# Group is Cameron Chin (CC), Sam Krysko (SK), Sophia St. Laurent (SSL), Devaney Lakshman(DL)
 
-#Imports#
+# Imports
 import pygame.event
 from pygame import *
 from constants import *
 from camera import *
 from player import *
 from wall import *
-from os import path
-from pytmx import *
 from pytmx.util_pygame import load_pygame
+import spritesheet
 
-#Variable Setup
+# Variable Setup
 running = True
 init()
-Display = display.set_mode((SCREENWIDTH,SCREENHEIGHT))
+Display = display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 Display.fill(WHITE)
 FPS = time.Clock()
 movable_event = USEREVENT + 1
 movable = True
 camera_group = CameraGroup()
-tmxdata = load_pygame('demomap.tmx')
-player = Player(camera_group, 1, 1)
+mapeditdata = load_pygame('demomap.tmx')
+ss = spritesheet.spritesheet("Characters_V3_Colour.png")
+player_ss_location = (0, 0, SSTILESIZE, SSTILESIZE)
+player = Player(camera_group, 1, 1, ss)
 
-#example
-#SSL added to this
+
+# example
+# SSL added to this
 # This shows how you can create a list of enemies.  First it creates a list with the first enemy
 # Then is adds a second enemy to the list with .append().
 # The reason for this example is if the enemies get read from the map file it might be good to have a list of
@@ -34,56 +36,45 @@ player = Player(camera_group, 1, 1)
 # ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
 # ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
 
-#created by SK, debugged by CC
-def blit_all_tiles(tmxdata,target):
-        #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
-        tile_offset = math.Vector2()
-        tile_offset.x = target.rect.centerx - SCREENWIDTH/2
-        tile_offset.y = target.rect.centery - SCREENHEIGHT/2
-        #runs through every layer in the .tmx files, and, then runs through every tile and blits it on the display
-        for layers in tmxdata:
-            for tile in layers.tiles():
-                #tile[0] is the x location on the gird
-                #tile[1] is the y location
-                #tile[2] is the image data for blitting
-                tile_image = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
-                #tile_image = tile[2]
-                x_pixel = tile[0] * TILESIZE - tile_offset.x
-                y_pixel = tile[1] * TILESIZE - tile_offset.y
-                #the actual blit command
-                display.get_surface().blit(tile_image, (x_pixel,y_pixel))
 
-# #Loading in map file
-# map_setup = []
-# map_file = open(path.join(path.dirname(__file__), 'map.txt'))
-# for line in map_file:
-#    map_setup.append(line)
-# #Map setup
-# rownum = 0
-# for row in map_setup:
-#     entrynum = 0
-#     for entry in row:
-#         if entry == 'W':
-#             Wall(camera_group, entrynum, rownum)
-#         elif entry == 'P':
-#             player = Player(camera_group, entrynum, rownum)
-#         entrynum += 1
-#     rownum += 1
+# created by SK, debugged by CC
+def blit_all_tiles(tmxdata, target):
+    # blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
+    tile_offset = math.Vector2()
+    tile_offset.x = target.rect.centerx - SCREENWIDTH / 2
+    tile_offset.y = target.rect.centery - SCREENHEIGHT / 2
+    # runs through every layer in the .tmx files, and, then runs through every tile and blits it on the display
+    for layers in tmxdata:
+        for tile in layers.tiles():
+            # tile[0] is the x location on the gird
+            # tile[1] is the y location
+            # tile[2] is the image data for blitting
+            tile_image = pygame.transform.scale(tile[2], (TILESIZE, TILESIZE))
+            # tile_image = tile[2]
+            x_pixel = tile[0] * TILESIZE - tile_offset.x
+            y_pixel = tile[1] * TILESIZE - tile_offset.y
+            # the actual blit command
+            display.get_surface().blit(tile_image, (x_pixel, y_pixel))
 
 
-#game logic in loop for while the game is running
+# game logic in loop for while the game is running
 while running:
     keys_pressed = key.get_pressed()
     player.dx, player.dy = 0, 0
-    if (keys_pressed[K_w] or keys_pressed[K_UP]) and player.y > 0 and player.dx == 0: # can remove dx == 0 for each condition if we want diagonal movement
+    # can remove dx == 0 for each condition if we want diagonal movement
+    if (keys_pressed[K_w] or keys_pressed[K_UP]) and player.y > 0 and player.dx == 0:
         player.dy = -1
-    if (keys_pressed[K_s] or keys_pressed[K_DOWN]) and player.y < (HEIGHT - 1) and player.dx == 0:
+        player.direction = Direction.UP
+    if (keys_pressed[K_s] or keys_pressed[K_DOWN]) and player.y < (50 - 1) and player.dx == 0:
         player.dy = 1
+        player.direction = Direction.DOWN
     if (keys_pressed[K_a] or keys_pressed[K_LEFT]) and player.x > 0 and player.dy == 0:
         player.dx = -1
-    if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and player.x < (WIDTH - 1) and player.dy == 0:
+        player.direction = Direction.LEFT
+    if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and player.x < (50 - 1) and player.dy == 0:
         player.dx = 1
-    #allows player to exit game
+        player.direction = Direction.RIGHT
+    # allows player to exit game
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
@@ -91,32 +82,41 @@ while running:
         elif event.type == movable_event:
             movable = True
 
-#update logic
-    #if it can move and isnt gonna go into anything:
+    # update logic
+    # if it can move and isnt gonna go into anything:
     if movable and not player.check_collide():
-        #check sequence to see if player moved
-        prev_pos = player.x*3 + player.y
+        # check sequence to see if player moved
+        prev_pos = player.x * 3 + player.y
         player.move()
-        #if they did move then dont let them move for another little bit
-        if prev_pos != player.x*3 + player.y:
+        # if they did move then dont let them move for another little bit
+        if prev_pos != player.x * 3 + player.y:
+            # change animation image
+            if player.anim_step == 0:
+                player.anim_step += 1
+            else:
+                player.anim_step -= 1
+            player.image = transform.scale(player.animation[player.direction.value][player.anim_step], (TILESIZE, TILESIZE))
+            # make the player not able to move
             movable = False
             time.set_timer(movable_event, MOVESPEED)
+        else:
+            player.anim_step = 2
+            player.image = transform.scale(player.animation[player.direction.value][player.anim_step], (TILESIZE, TILESIZE))
 
         # SSL Check if the player and enemy is within proximity to fight
         # if player.should_start_battle(enemy):
-            # Do the Battely stuff here
-            # todo
+        # Do the Battely stuff here
+        # todo
 
-    #updates rect of each sprite to resolution coords not grid coords
+    # updates rect of each sprite to resolution coords not grid coords
     for sprite in camera_group:
         sprite.make_cam_pos()
 
-#draw logic
+    # draw logic
     Display.fill(BG_COLOUR)
-    #SK: blit the tiles from the .tmx file on the display 
-    blit_all_tiles(tmxdata,player)
-    #camera_group.draw(Display)
+    # SK: blit the tiles from the .tmx file on the display
+    blit_all_tiles(mapeditdata, player)
     camera_group.custom_draw(player)
-    camera_group.draw_grid()
+    #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)

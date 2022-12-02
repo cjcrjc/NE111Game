@@ -4,12 +4,13 @@ from pygame import *
 from constants import *
 from wall import *
 
+
 class Enemy(sprite.Sprite):
 
     # initiallizing the enemy
     def __init__(self, group, x, y, type):
         super().__init__(group)
-        #here is where we define character graphics for now its basic
+        # here is where we define character graphics for now its basic
         self.image = Surface((16, 16))
         self.image.fill(BLUE)
         self.rect = self.image.get_rect()
@@ -27,20 +28,20 @@ class Enemy(sprite.Sprite):
 
         # Fill in later
 
-#SSL random mob generator basically    def get_mob_type():
+# SSL random mob generator basically    def get_mob_type():
         from random import seed
         from random import randint
         seed(1)
         return randint(0, 2)
 
-    #SSL
+    # SSL
     def take_damage(self, damage):
-        if (damage >= self.health):
+        if damage >= self.health:
             self.damage = 0
         else:
             self.health - damage
 
-    #SSL
+    # SSL
     def is_dead(self):
         if self.health == 0:
             return True

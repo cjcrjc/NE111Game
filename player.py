@@ -2,29 +2,48 @@ from pygame import *
 from constants import *
 from enemy import *
 from wall import *
+from enum import Enum
+
+
+class Direction(Enum):
+    UP = 0
+    DOWN = 1
+    RIGHT = 2
+    LEFT = 3
+
 
 class Player(sprite.Sprite):
-
-
     # initiallizing the player
-    def __init__(self, group, x, y):
+    def __init__(self, group, x, y, ss):
         super().__init__(group)
-        #here is where we define character graphics for now its basic
-        self.image = image.load("Characters_V3_Colour.png").convert_alpha()
-        self.x = x + 0.25
-        self.y = y + 0.25
+        # Animations arrays
+        self.anim_step = 0
+        self.down_anim = ss.load_strip((SSTILESIZE * 4, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
+        self.down_anim.append(ss.image_at((0, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
+        self.up_anim = ss.load_strip((SSTILESIZE * 6, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
+        self.up_anim.append(ss.image_at((SSTILESIZE, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
+        self.right_anim = ss.load_strip((SSTILESIZE * 8, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
+        self.right_anim.append(ss.image_at((SSTILESIZE*2, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
+        self.left_anim = [transform.flip(self.right_anim[0], True, False), transform.flip(self.right_anim[1], True, False), transform.flip(self.right_anim[2], True, False)]
+        self.animation = [self.up_anim, self.down_anim, self.right_anim, self.left_anim]
+
+        # here is where we define character graphics for now its basic
+        self.image = transform.scale(self.down_anim[self.anim_step], (TILESIZE, TILESIZE))
+        self.x = x
+        self.y = y
         self.dx = 0
         self.dy = 0
+        self.direction = Direction.DOWN
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x * TILESIZE/2, y * TILESIZE/2)
+        self.rect.topleft = (x * SSTILESIZE, y * SSTILESIZE)
 
         # SSL Adding Player characteristics
         self.health = PLAYERHEALTH
 
-    #checks for collisions between player and wall sprites in future direction
+    # checks for collisions between player and wall sprites in future direction
     def check_collide(self):
-        for object in self.groups()[0]:
-            if isinstance(object, Wall) and (object.x == self.x + self.dx and object.y == self.y + self.dy):
+        for thing in self.groups()[0]:
+            if isinstance(thing, Wall) and (thing.x == self.x + self.dx and thing.y == self.y + self.dy):
                 return True
         return False
 
@@ -33,25 +52,25 @@ class Player(sprite.Sprite):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
-    #self explanatory
+    # self-explanatory
     def move(self):
         self.x += self.dx
         self.y += self.dy
 
-# SSL
-# when player and enemy are within certain distance, freeze both and make them fight each other
+    # SSL
+    # when player and enemy are within certain distance, freeze both and make them fight each other
     def should_start_battle(self, enemy):
         # Detect proximity with enemy to decide if battle starts
         return False
 
-    #SSL
+    # SSL
     def take_damage(self, damage):
         if (damage >= self.health):
             self.damage = 0
         else:
             self.health - damage
 
-    #SSL
+    # SSL
     def is_dead(self):
         if self.health == 0:
             return True
