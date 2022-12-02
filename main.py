@@ -39,36 +39,17 @@ world_offset = [0,0]
 def blit_all_tiles(Display,tmxdata,world_offset,target):
         #blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
         tile_offset = math.Vector2()
-        tile_offset.x = target.rect.centerx - SCREENWIDTH/2
-        tile_offset.y = target.rect.centery - SCREENHEIGHT/2
+        tile_offset.x = target.rect.centerx - SCREENWIDTH/2 - TILESIZE/2
+        tile_offset.y = target.rect.centery - SCREENHEIGHT/2 - TILESIZE/2
         for layer in tmxdata:
             for tile in layer.tiles():
                 #tile[0] is the x location on the gird
                 #tile[1] is the y location
                 #tile[2] is the image data for blitting
-                tile_image = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
-                #tile_image = tile[2]
+                img = pygame.transform.scale(tile[2],(TILESIZE,TILESIZE))
                 x_pixel = tile[0] * TILESIZE + world_offset[0] - tile_offset.x
                 y_pixel = tile[1] * TILESIZE + world_offset[1] - tile_offset.y
-                Display.blit(tile_image, (x_pixel,y_pixel))
-
-# #Loading in map file
-# map_setup = []
-# map_file = open(path.join(path.dirname(__file__), 'map.txt'))
-# for line in map_file:
-#    map_setup.append(line)
-# #Map setup
-# rownum = 0
-# for row in map_setup:
-#     entrynum = 0
-#     for entry in row:
-#         if entry == 'W':
-#             Wall(camera_group, entrynum, rownum)
-#         elif entry == 'P':
-#             player = Player(camera_group, entrynum, rownum)
-#         entrynum += 1
-#     rownum += 1
-
+                Display.blit(img, (x_pixel,y_pixel))
 
 #game logic in loop for while the game is running
 while running:
@@ -116,6 +97,6 @@ while running:
     blit_all_tiles(Display,tmxdata,world_offset,player)
     #camera_group.draw(Display)
     camera_group.custom_draw(player)
-    camera_group.draw_grid()
+    #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)

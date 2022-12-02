@@ -27,23 +27,23 @@ class Enemy(sprite.Sprite):
 
         # Fill in later
 
-#SSL random mob generator basically    def get_mob_type():
-        from random import seed
-        from random import randint
-        seed(1)
-        return randint(0, 2)
+#SSL random mob generator basically
+def get_mob_type():
+    from random import seed
+    from random import randint
+    seed(1)
+    return randint(0, 2)
 
-    #SSL
-    def take_damage(self, damage):
-        if (damage >= self.health):
-            self.damage = 0
-        else:
-            self.health - damage
+#SSL
+def take_damage(damage):
+    if (damage >= self.health):
+        self.damage = 0
+    else:
+        self.health - damage
 
-    #SSL
-    def is_dead(self):
-        if self.health == 0:
-            return True
-        else:
-            return False
-
+#SSL
+def is_dead():
+    if self.health = 0:
+        return True
+    else:
+        return False

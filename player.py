@@ -12,12 +12,12 @@ class Player(sprite.Sprite):
         #here is where we define character graphics for now its basic
         self.image = Surface((16, 16))
         self.image.fill(RED)
-        self.x = x + 0.25
-        self.y = y + 0.25
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x * 16, y * 16)
+        self.x = x
+        self.y = y
         self.dx = 0
         self.dy = 0
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x * TILESIZE/2, y * TILESIZE/2)
 
         # SSL Adding Player characteristics
         self.health = PLAYERHEALTH
@@ -41,20 +41,20 @@ class Player(sprite.Sprite):
 
 # SSL
 # when player and enemy are within certain distance, freeze both and make them fight each other
-    def should_start_battle(self, enemy):
-        # Detect proximity with enemy to decide if battle starts
+def should_start_battle(self, enemy):
+    # Detect proximity with enemy to decide if battle starts
+    return False
+
+#SSL
+def take_damage(damage):
+    if (damage >= self.health):
+        self.damage = 0
+    else:
+        self.health - damage
+
+#SSL
+def is_dead():
+    if self.health = 0:
+        return True
+    else:
         return False
-
-    #SSL
-    def take_damage(self, damage):
-        if (damage >= self.health):
-            self.damage = 0
-        else:
-            self.health - damage
-
-    #SSL
-    def is_dead(self):
-        if self.health == 0:
-            return True
-        else:
-            return False
