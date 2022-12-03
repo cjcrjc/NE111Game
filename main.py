@@ -1,6 +1,7 @@
 # Group is Cameron Chin (CC), Sam Krysko (SK), Sophia St. Laurent (SSL), Devaney Lakshman(DL)
 
 # Imports
+# Required downloads: pygame, pytmx, spritesheet (pip install ____)
 import pygame.event
 from pygame import *
 from constants import *
@@ -74,6 +75,7 @@ while running:
     if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and player.x < (50 - 1) and player.dy == 0:
         player.dx = 1
         player.direction = Direction.RIGHT
+    
     # allows player to exit game
     for event in pygame.event.get():
         if event.type == QUIT:
