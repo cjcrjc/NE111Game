@@ -23,7 +23,7 @@ movable_event = USEREVENT + 1
 enemy_hits_event = USEREVENT + 2
 movable = True
 camera_group = CameraGroup()
-mapeditdata = load_pygame('demomap.tmx')
+mapdata = load_pygame('demomap.tmx')
 ss = spritesheet.spritesheet("Characters_V3_Colour.png")
 player_ss_location = (0, 0, SSTILESIZE, SSTILESIZE)
 player = Player(camera_group, 1, 1, ss)
@@ -45,13 +45,13 @@ def end_of_game():
     exit()
 
 # created by SK, debugged by CC
-def blit_all_tiles(tmxdata, target):
+def blit_all_tiles(mapdata, target):
     # blits the map using the display(screen), pytmx module for loading .tmx files, and the camera position
     tile_offset = math.Vector2()
     tile_offset.x = target.rect.centerx - SCREENWIDTH / 2
     tile_offset.y = target.rect.centery - SCREENHEIGHT / 2
     # runs through every layer in the .tmx files, and, then runs through every tile and blits it on the display
-    for layers in tmxdata:
+    for layers in mapdata:
         for tile in layers.tiles():
             # tile[0] is the x location on the gird
             # tile[1] is the y location
@@ -62,23 +62,26 @@ def blit_all_tiles(tmxdata, target):
             y_pixel = tile[1] * TILESIZE - tile_offset.y
             # the actual blit command
             display.get_surface().blit(tile_image, (x_pixel, y_pixel))
+        # for tile_object in mapdata.objects:
+        #     if tile_object.name == 'obstacles':
+        #         Wall(tile_object.x, tile_object.y, tile_object.h, tile_object.w)
+
 
 
 # game logic in loop for while the game is running
 while running:
     keys_pressed = key.get_pressed()
     player.dx, player.dy = 0, 0
-    # can remove dx == 0 for each condition if we want diagonal movement
-    if (keys_pressed[K_w] or keys_pressed[K_UP]) and player.y > 0 and player.dx == 0:
+    if (keys_pressed[K_w] or keys_pressed[K_UP]) and player.y > 0:
         player.dy = -1
         player.direction = Direction.UP
-    if (keys_pressed[K_s] or keys_pressed[K_DOWN]) and player.y < (50 - 1) and player.dx == 0:
+    if (keys_pressed[K_s] or keys_pressed[K_DOWN]) and player.y < (50 - 1):
         player.dy = 1
         player.direction = Direction.DOWN
-    if (keys_pressed[K_a] or keys_pressed[K_LEFT]) and player.x > 0 and player.dy == 0:
+    if (keys_pressed[K_a] or keys_pressed[K_LEFT]) and player.x > 0:
         player.dx = -1
         player.direction = Direction.LEFT
-    if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and player.x < (50 - 1) and player.dy == 0:
+    if (keys_pressed[K_d] or keys_pressed[K_RIGHT]) and player.x < (50 - 1):
         player.dx = 1
         player.direction = Direction.RIGHT
     
@@ -146,7 +149,7 @@ while running:
     # draw logic
     Display.fill(BG_COLOUR)
     # SK: blit the tiles from the .tmx file on the display
-    blit_all_tiles(mapeditdata, player)
+    blit_all_tiles(mapdata, player)
     camera_group.custom_draw(player)
 
     #camera_group.draw_grid()
