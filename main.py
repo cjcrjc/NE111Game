@@ -10,6 +10,7 @@ from player import *
 from wall import *
 from pytmx.util_pygame import load_pygame
 import spritesheet
+from enemy import *
 
 # Variable Setup
 running = True
@@ -18,6 +19,8 @@ Display = display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 Display.fill(WHITE)
 FPS = time.Clock()
 movable_event = USEREVENT + 1
+#SSL
+enemy_hits_event = USEREVENT + 2
 movable = True
 camera_group = CameraGroup()
 mapeditdata = load_pygame('demomap.tmx')
@@ -33,9 +36,13 @@ all_enemies = pygame.sprite.Group()
 # call all_enemies.add whenever creating/spawning enemy sprites
 
 # get_mob_type creates a random number that is used to decide what type of mob to create
-# all_enemies.add(Enemy(camera_group, 5, 5, get_mob_type()))
+# add this to test
+#all_enemies.add(Enemy(camera_group, 5, 5, ss, get_mob_type()))
 
-
+#SSL
+def end_of_game():
+    #can do any screen here, made it for a func below
+    exit()
 
 # created by SK, debugged by CC
 def blit_all_tiles(tmxdata, target):
@@ -80,10 +87,19 @@ while running:
         if event.type == QUIT:
             running = False
             exit()
-        elif event.type == movable_event:
+        elif (event.type == movable_event and battle == False):
             movable = True
+        #SSL
+        elif (event.type == enemy_hits_event and battle == True):
+        #SSL
+            player.take_damage(collided_enemy.damage)
+            if player.is_dead() == True:
+                battle = False
+                end_of_game()
+            else:
+                time.set_timer(enemy_hits_event, collided_enemy.hit_rate)
 
-
+#SSL
     if battle == True:
         if (keys_pressed[K_SPACE]):
             #draw attack
@@ -120,8 +136,8 @@ while running:
         if collided_enemy is not None:
             battle = True
             movable = False
+            time.set_timer(enemy_hits_event, collided_enemy.hit_rate)
 
-        # Do the Battely stuff here
 
     # updates rect of each sprite to resolution coords not grid coords
     for sprite in camera_group:
@@ -132,6 +148,7 @@ while running:
     # SK: blit the tiles from the .tmx file on the display
     blit_all_tiles(mapeditdata, player)
     camera_group.custom_draw(player)
+
     #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)
