@@ -9,7 +9,7 @@ from enum import Enum
 def test_collision(sprite1, sprite2):
     if sprite1 != sprite2:
         collide_rect = sprite1.rect.inflate(TILESIZE*2, TILESIZE*2)
-        return sprite2.colliderect(collide_rect)
+        return sprite2.rect.colliderect(collide_rect)
     else:
         return False
 class Direction(Enum):
@@ -46,6 +46,7 @@ class Player(sprite.Sprite):
 
         # SSL Adding Player characteristics
         self.health = PLAYERHEALTH
+        self.damage = PLAYERHITDMG
 
     # checks for collisions between player and wall sprites in future direction
     def check_collide(self):
@@ -71,14 +72,14 @@ class Player(sprite.Sprite):
         enemy = pygame.sprite.spritecollideany(self, all_enemies, collided=test_collision)
         return enemy
 
-    # SSL
+    # SSL, debugged by SSL
     def take_damage(self, damage):
         if (damage >= self.health):
-            self.damage = 0
+            self.health = 0
         else:
-            self.health - damage
+            self.health = self.health - damage
 
-    # SSL
+    # SSL, debugged by SSL
     def is_dead(self):
         if self.health == 0:
             return True
