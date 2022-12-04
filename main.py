@@ -24,18 +24,17 @@ mapeditdata = load_pygame('demomap.tmx')
 ss = spritesheet.spritesheet("Characters_V3_Colour.png")
 player_ss_location = (0, 0, SSTILESIZE, SSTILESIZE)
 player = Player(camera_group, 1, 1, ss)
+battle = False
 
-
-# example
-# SSL added to this
-# This shows how you can create a list of enemies.  First it creates a list with the first enemy
-# Then is adds a second enemy to the list with .append().
-# The reason for this example is if the enemies get read from the map file it might be good to have a list of
-# all the enemies later.  Don't know if it's helpful but tried it
+#SSL
+all_player = pygame.sprite.Group()
+all_player.add(player)
+all_enemies = pygame.sprite.Group()
+# call all_enemies.add whenever creating/spawning enemy sprites
 
 # get_mob_type creates a random number that is used to decide what type of mob to create
-# ListOfEnemyies = [Enemy(camera_group, 5, 5, get_mob_type())]
-# ListOfEnemyies.append(Enemy(camera_group, 5, 5, get_mob_type()))
+# all_enemies.add(Enemy(camera_group, 5, 5, get_mob_type()))
+
 
 
 # created by SK, debugged by CC
@@ -84,6 +83,17 @@ while running:
         elif event.type == movable_event:
             movable = True
 
+
+    if battle == True:
+        if (keys_pressed[K_SPACE]):
+            #draw attack
+            collided_enemy.take_damage(player.damage)
+            if collided_enemy.is_dead() == True:
+                all_enemies.remove(collided_enemy)
+                collided_enemy = None
+                movable = True
+                battle = False
+
     # update logic
     # if it can move and isnt gonna go into anything:
     if movable and not player.check_collide():
@@ -106,9 +116,12 @@ while running:
             player.image = transform.scale(player.animation[player.direction.value][player.anim_step], (TILESIZE, TILESIZE))
 
         # SSL Check if the player and enemy is within proximity to fight
-        # if player.should_start_battle(enemy):
+        collided_enemy = player.should_start_battle(all_enemies)
+        if collided_enemy is not None:
+            battle = True
+            movable = False
+
         # Do the Battely stuff here
-        # todo
 
     # updates rect of each sprite to resolution coords not grid coords
     for sprite in camera_group:
