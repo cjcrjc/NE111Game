@@ -1,10 +1,17 @@
+import pygame
 from pygame import *
 from constants import *
 from enemy import *
 from wall import *
 from enum import Enum
 
-
+#SSL if puffy player touches any enemy
+def test_collision(sprite1, sprite2):
+    if sprite1 != sprite2:
+        collide_rect = sprite1.rect.inflate(TILESIZE*2, TILESIZE*2)
+        return sprite2.colliderect(collide_rect)
+    else:
+        return False
 class Direction(Enum):
     UP = 0
     DOWN = 1
@@ -59,9 +66,10 @@ class Player(sprite.Sprite):
 
     # SSL
     # when player and enemy are within certain distance, freeze both and make them fight each other
-    def should_start_battle(self, enemy):
+    def should_start_battle(self, all_enemies):
         # Detect proximity with enemy to decide if battle starts
-        return False
+        enemy = pygame.sprite.spritecollideany(self, all_enemies, collided=test_collision)
+        return enemy
 
     # SSL
     def take_damage(self, damage):
