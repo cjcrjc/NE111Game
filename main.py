@@ -31,12 +31,6 @@ player_ss_location = (0, 0, SSTILESIZE, SSTILESIZE)
 player = Player(camera_group, 1, 1, ss)
 battle = False
 
-#SK: initializing the walls
-walls_setup = []
-walls_file = open(path.join(path.dirname(__file__), 'walls.txt'))
-#draws a line on the map for each line in the 'walls.txt' file
-for line in walls_file:
-        walls_setup.append(line)
 
 #SSL
 all_player = pygame.sprite.Group()
@@ -47,6 +41,13 @@ all_enemies = pygame.sprite.Group()
 # get_mob_type creates a random number that is used to decide what type of mob to create
 # add this to test
 #all_enemies.add(Enemy(camera_group, 5, 5, ss, get_mob_type()))
+
+#SK: initializing the walls
+walls_setup = []
+walls_file = open(path.join(path.dirname(__file__), 'walls.txt'))
+#draws a line on the map for each line in the 'walls.txt' file
+for line in walls_file:
+        walls_setup.append(line)
 
 #SK: setting up a map for the walls
 rownum = 0
