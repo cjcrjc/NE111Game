@@ -9,8 +9,10 @@ from camera import *
 from player import *
 from wall import *
 from pytmx.util_pygame import load_pygame
+from pytmx.pytmx import *
 import spritesheet
 from enemy import *
+from os import path
 
 # Variable Setup
 running = True
@@ -29,6 +31,13 @@ player_ss_location = (0, 0, SSTILESIZE, SSTILESIZE)
 player = Player(camera_group, 1, 1, ss)
 battle = False
 
+#SK: initializing the walls
+walls_setup = []
+walls_file = open(path.join(path.dirname(__file__), 'walls.txt'))
+#draws a line on the map for each line in the 'walls.txt' file
+for line in walls_file:
+        walls_setup.append(line)
+
 #SSL
 all_player = pygame.sprite.Group()
 all_player.add(player)
@@ -38,6 +47,18 @@ all_enemies = pygame.sprite.Group()
 # get_mob_type creates a random number that is used to decide what type of mob to create
 # add this to test
 #all_enemies.add(Enemy(camera_group, 5, 5, ss, get_mob_type()))
+
+#SK: setting up a map for the walls
+rownum = 0
+#SK: goes through each row in 'walls.txt' and checks for 'W's for wall positions, then makes a wall sprite there
+#after sprite is made, the next row and/or entry in the 'walls.txt' file is checked
+for row in walls_setup:
+    entrynum = 0
+    for entry in row:
+        if entry == 'W':
+            Wall(camera_group, entrynum, rownum)
+        entrynum += 1
+    rownum += 1
 
 #SSL
 def end_of_game():
@@ -62,11 +83,6 @@ def blit_all_tiles(mapdata, target):
             y_pixel = tile[1] * TILESIZE - tile_offset.y
             # the actual blit command
             display.get_surface().blit(tile_image, (x_pixel, y_pixel))
-        # for tile_object in mapdata.objects:
-        #     if tile_object.name == 'obstacles':
-        #         Wall(tile_object.x, tile_object.y, tile_object.h, tile_object.w)
-
-
 
 # game logic in loop for while the game is running
 while running:
