@@ -1,37 +1,14 @@
-import pygame
 # SSL made a basic Enemy, didn't do much, but wanted to set the health
-from pygame import *
-from constants import *
 from wall import *
 from random import *
 
 
+# CC
 class Enemy(sprite.Sprite):
 
-    # initiallizing the enemy
+    # initializing the enemy
     def __init__(self, group, x, y, ss):
         super().__init__(group)
-         # Animations arrays
-        self.anim_step = 2
-        self.down_anim = ss.load_strip((SSTILESIZE * 4, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.down_anim.append(ss.image_at((0, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
-        self.up_anim = ss.load_strip((SSTILESIZE * 6, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.up_anim.append(ss.image_at((SSTILESIZE, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
-        self.right_anim = ss.load_strip((SSTILESIZE * 8, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.right_anim.append(ss.image_at((SSTILESIZE*2, SSENEMYLOCATION*SSTILESIZE, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
-        self.left_anim = [transform.flip(self.right_anim[0], True, False), transform.flip(self.right_anim[1], True, False), transform.flip(self.right_anim[2], True, False)]
-        self.animation = [self.up_anim, self.down_anim, self.right_anim, self.left_anim]
-
-        # here is where we define character graphics for now its basic
-        self.image = transform.scale(self.down_anim[self.anim_step], (TILESIZE, TILESIZE))
-        self.x = x
-        self.y = y
-        self.dx = 0
-        self.dy = 0
-
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x * SSTILESIZE, y * SSTILESIZE)
-
         # SSL Adding Player characteristics
         self.type = randint(0, 2)
         self.mob_type = TYPES_OF_MOBS[self.type]
@@ -42,8 +19,27 @@ class Enemy(sprite.Sprite):
         self.health_bar = None
         self.can_attack = True
 
-        # Fill in later
-#SSL rectangles around enemy sprites
+        # Animations arrays
+        self.anim_step = 2
+        self.down_anim = ss.load_multi_image((SSTILESIZE * 4, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE), 2)
+        self.down_anim.append(ss.load_single_image((0, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE)))
+        self.up_anim = ss.load_multi_image((SSTILESIZE * 6, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE), 2)
+        self.up_anim.append(ss.load_single_image((SSTILESIZE, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE)))
+        self.right_anim = ss.load_multi_image((SSTILESIZE * 8, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE), 2)
+        self.right_anim.append(ss.load_single_image((SSTILESIZE * 2, TYPES_OF_MOBS[self.type][MOB_SSLOCATION] * SSTILESIZE, SSTILESIZE, SSTILESIZE)))
+        self.left_anim = [transform.flip(self.right_anim[0], True, False), transform.flip(self.right_anim[1], True, False), transform.flip(self.right_anim[2], True, False)]
+        self.animation = [self.up_anim, self.down_anim, self.right_anim, self.left_anim]
+
+        # here is where we define character graphics for now its basic
+        self.image = transform.scale(self.down_anim[self.anim_step], (TILESIZE, TILESIZE))
+        self.x = x
+        self.y = y
+        self.dx = 0
+        self.dy = 0
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x * SSTILESIZE, y * SSTILESIZE)
+
+# SSL rectangles around enemy sprites
     def make_cam_pos(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
@@ -83,4 +79,3 @@ class Enemy(sprite.Sprite):
             return True
         else:
             return False
-

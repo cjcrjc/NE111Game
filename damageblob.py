@@ -1,8 +1,8 @@
-import pygame.draw
 from pygame import *
 from constants import *
 
 
+# CC
 class Damaged(sprite.Sprite):
     def __init__(self, group, x, y, rad):
         super().__init__(group)
@@ -12,7 +12,6 @@ class Damaged(sprite.Sprite):
         self.x = x
         self.y = y
         self.rad = rad
-
 
     def update(self):
         self.rad -= 0.05

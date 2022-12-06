@@ -1,10 +1,6 @@
-import pygame
-from pygame import *
-from constants import *
-from enemy import *
 from wall import *
 from enum import Enum
-import damageblob
+
 
 class Direction(Enum):
     UP = 0
@@ -13,18 +9,19 @@ class Direction(Enum):
     LEFT = 3
 
 
+# CC
 class Player(sprite.Sprite):
-    # initiallizing the player
+    # initializing the player
     def __init__(self, group, x, y, ss):
         super().__init__(group)
         # Animations arrays
         self.anim_step = 0
-        self.down_anim = ss.load_strip((SSTILESIZE * 4, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.down_anim.append(ss.image_at((0, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
-        self.up_anim = ss.load_strip((SSTILESIZE * 6, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.up_anim.append(ss.image_at((SSTILESIZE, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
-        self.right_anim = ss.load_strip((SSTILESIZE * 8, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2, colorkey=BLACK)
-        self.right_anim.append(ss.image_at((SSTILESIZE*2, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), colorkey=BLACK))
+        self.down_anim = ss.load_multi_image((SSTILESIZE * 4, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2)
+        self.down_anim.append(ss.load_single_image((0, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE)))
+        self.up_anim = ss.load_multi_image((SSTILESIZE * 6, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2)
+        self.up_anim.append(ss.load_single_image((SSTILESIZE, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE)))
+        self.right_anim = ss.load_multi_image((SSTILESIZE * 8, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE), 2)
+        self.right_anim.append(ss.load_single_image((SSTILESIZE * 2, SSPLAYERLOCATION, SSTILESIZE, SSTILESIZE)))
         self.left_anim = [transform.flip(self.right_anim[0], True, False), transform.flip(self.right_anim[1], True, False), transform.flip(self.right_anim[2], True, False)]
         self.animation = [self.up_anim, self.down_anim, self.right_anim, self.left_anim]
 
@@ -41,6 +38,7 @@ class Player(sprite.Sprite):
         # SSL Adding Player characteristics
         self.health = PLAYERHEALTH
         self.damage = PLAYERHITDMG
+        self.health_bar = None
 
     # makes the player coordinates into actual sprite properties
     def make_cam_pos(self):
@@ -53,6 +51,8 @@ class Player(sprite.Sprite):
         self.y += self.dy
 
     def draw_health(self):
+        if self.health > 100:
+            self.health = 100
         if self.health > 70:
             col = GREEN
         elif self.health > 40:

@@ -2,8 +2,9 @@ from constants import *
 from pygame import *
 
 
+# CC
 class Wall(sprite.Sprite):
-    #initiallizing the walls
+    # initializing the walls
     def __init__(self, group, x, y):
         super().__init__(group)
         self.image = Surface((TILESIZE, TILESIZE))
@@ -13,7 +14,7 @@ class Wall(sprite.Sprite):
         self.x = x
         self.y = y
 
-    #makes the wall coordinates into actual sprite properties
+    # makes the wall coordinates into actual sprite properties
     def make_cam_pos(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE

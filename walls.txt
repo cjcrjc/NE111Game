@@ -1,7 +1,7 @@
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W....E....WW.....WW..WWW.......WW..W.....WWWWWWWWW
-WWW..............WW.WWWW.W...............WWWWW.WWW
-WWW..............W...WWW......W.......WWWWWWWWW.WW
+WWW..............WW.WWWW.W...........P...WWWWW.WWW
+WWWP.............W...WWW......W.......WWWWWWWWW.WW
 WW..W...W.W.............E............WWWWWWWWWW..W
 WWW....WWWW...........WWWWWW......WWWWWWWWWWWWWW.W
 WWWW...WWWW..........WWWWWWW.......WWWWWWWWWWWWW.W
@@ -17,13 +17,13 @@ WWW..............W..W...WWWWW...WWWWWWW..WWWWWWWWW
 WWW.W..WW...............WWWW....WWWWWWWWWWWWWWWWWW
 WW..WW.WWWWW............W.W.......WWWWWWWWWW....WW
 WW..WWWWWWWWWW....................WWWWWWWWWWWWWW.W
-WW..WWWWWWWWW.................W...WWWWWW...W...W.W
+WW..WWWWWWWWW...........P.....W...WWWWWW...W...W.W
 WW..WWWWWWWWW....W............W...WWWW.....W.W.W.W
 WW..WWWWWWWWW..........WWW........WWW.WWWWW....W.W
 WWWWWWWWWWWWW..........WWWWW.........E.........W.W
 WWW.WWWWWWWWWW.....W....WWWW.....WWWW.W..W..WW.W.W
 WWW.WWWWWWWWW..................W.WWWW.W........W.W
-WWW.WWWWWWW............W...W....WWWW..W........W.W
+WWW.WWWWWWW............W...W....WWWW..W....P ...W.W
 WWW.WWWWWWWWW..W...............WWWW...W......W.WWW
 WWW.WWWWWWWWWW...W.............WWWW...W..WW..W.W.W
 WWW..WW..WWWW.......WWWWW...W..WWWWWW.W........W.W
@@ -35,7 +35,7 @@ W.............E..W....WWWWWWWWWWW...WWWWWWWWWWWWWW
 W.....................WWWWWWWWWWW.......WWWWWWWWWW
 W............W........WWWWWWWWWWW............WWWWW
 W...W.................WWWWWWWWWWW...WWWWWW....WWWW
-W........................WWWWWWW....WWWWWW....WWWW
+W................P.......WWWWWWW....WWWWWW....WWWW
 W......W.....................WWW....WWWWWWW.WWWWWW
 W..............W....................WW.......WWWWW
 W...................................W........WWWWW
