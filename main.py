@@ -58,7 +58,7 @@ for row in walls_setup:
         entrynum += 1
     rownum += 1
 
-#SSL
+#SSL exits game upon player death
 def end_of_game():
     #can do any screen here, made it for a func below
     exit()
@@ -110,7 +110,7 @@ while running:
             playercanattack = True
         # SSL
         elif event.type == enemy_hits_event and battle:
-        # SSL
+        # SSL if player dies then end game, take damage
             if collided_enemy is not None:
                 player.take_damage(collided_enemy.damage)
                 for i in range(3):
@@ -136,7 +136,7 @@ while running:
             player.take_damage(collided_enemy.damage)
             time.set_timer(enemy_hits_event, collided_enemy.hit_rate)
     print(battle)
-    # SSL
+    # SSL when player can attack, space bar for attack, how often player can attack and enemy death
     if battle:
         if (keys_pressed[K_SPACE]) and playercanattack:
             #draw attack
