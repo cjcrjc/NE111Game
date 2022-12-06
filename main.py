@@ -33,7 +33,7 @@ player = Player(camera_group, 1, 1, ss)
 battle = False
 collided_enemy = None
 playercanattack = True
-# CC loads sounds
+# CC + DL loads sounds
 mixer.init()
 mixer.music.load("Explore.mp3")
 mixer.music.play(-1)
