@@ -2,6 +2,7 @@ from pygame import *
 from constants import *
 
 
+# CC
 class Heal(sprite.Sprite):
     def __init__(self, group, x, y):
         super().__init__(group)
