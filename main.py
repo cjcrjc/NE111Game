@@ -90,7 +90,7 @@ def blit_all_tiles(data, target):
             display.get_surface().blit(tile_image, (x_pixel, y_pixel))
 
 
-# game logic in loop for while the game is running CC
+# game logic in loop for while the game is running DL
 while running:
     keys_pressed = key.get_pressed()
     player.dx, player.dy = 0, 0
@@ -109,7 +109,7 @@ while running:
     if keys_pressed[K_ESCAPE]:
         exit()
 
-    # allows player to exit game CC
+    # allows player to exit game DL
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
@@ -154,6 +154,7 @@ while running:
 
     if collided_enemy is not None:
         if not battle:
+            #DL+CC plays particular battle music when engaged in a battle
             mixer.music.unload()
             mixer.music.load("Battle.mp3")
             mixer.music.play()
@@ -179,6 +180,7 @@ while running:
             playercanattack = False
             time.set_timer(player_canattack_event, PLAYERHITRATE)
             if collided_enemy.is_dead():
+                #DL+CC after the enemy is killed, battle music is stopped and switches back to main theme
                 mixer.music.unload()
                 mixer.music.load("Explore.mp3")
                 mixer.music.play()
