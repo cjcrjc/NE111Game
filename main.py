@@ -4,6 +4,7 @@
 # Required downloads: pygame, pytmx, spritesheet (pip install ____)
 import pygame.event
 from pygame import *
+from pygame import mixer
 from constants import *
 from camera import *
 from player import *
@@ -13,6 +14,7 @@ from pytmx.pytmx import *
 import spritesheet
 from enemy import *
 from os import path
+from music import *
 
 # Variable Setup
 running = True
@@ -84,6 +86,12 @@ def blit_all_tiles(mapdata, target):
             y_pixel = tile[1] * TILESIZE - tile_offset.y
             # the actual blit command
             display.get_surface().blit(tile_image, (x_pixel, y_pixel))
+
+#DL: define the sound 
+# music = mixer.music.load('combat_song.mp3')
+
+# pygame.mixer.music.play(-1)
+
 
 # game logic in loop for while the game is running
 while running:
@@ -168,7 +176,7 @@ while running:
     # SK: blit the tiles from the .tmx file on the display
     blit_all_tiles(mapdata, player)
     camera_group.custom_draw(player)
-
+    
     #camera_group.draw_grid()
     display.update()
     FPS.tick(FRAMERATE)
