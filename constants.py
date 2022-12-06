@@ -4,6 +4,7 @@ SCREENHEIGHT = 768
 TILESIZE = 32
 SSTILESIZE = 16
 SSPLAYERLOCATION = 0
+SSENEMYLOCATION = 10
 HEIGHT = SCREENHEIGHT/TILESIZE
 WIDTH = SCREENWIDTH/TILESIZE
 FRAMERATE = 60
@@ -14,15 +15,17 @@ BLACK = (0, 0, 0)         # Black
 WHITE = (255, 255, 255)   # White
 GREY = (128, 128, 128)   # Grey
 RED = (255, 0, 0)       # Red
+GREEN = (0, 255, 0)     # Green
 BLUE = (0, 0, 255)      # Blue
-BG_COLOUR = (14,135,204)  # BLUEISH WATER COLOUR
+YELLOW = (255,255,0)
+BG_COLOUR = (56,96,138)  # BLUEISH WATER COLOUR
 
 #HEALTH CONSTANTS SSL
 PLAYERHEALTH = 100 #both have same health but will have different dmg and swing rates
 
 #BATTLE CONSTANTS SSL
 PLAYERHITDMG = 30 #how fast player swings sword, faster than enemy
-PLAYERHITRATE = 100 #how fast player can hit enemy in battle sequence
+PLAYERHITRATE = 1000 #how fast player can hit enemy in battle sequence
 
 #SSL MOB CONSTANTS
 MOB_HEALTH = 0
@@ -30,10 +33,10 @@ MOB_DAMAGE = 1
 MOB_HIT_RATE = 2
 
 #SSL MOB TYPE 1
-MOB1 = (100, 10, 750)
+MOB1 = (100, 4, 2000)
 #SSL MOB TYPE 2
-MOB2 = (125, 30, 1000)
+MOB2 = (120, 5, 2000)
 #SSL MOB TYPE 3
-MOB3 = (75, 10, 500)
+MOB3 = (150, 10, 3000)
 
 TYPES_OF_MOBS = [MOB1, MOB2, MOB3]

@@ -4,14 +4,8 @@ from constants import *
 from enemy import *
 from wall import *
 from enum import Enum
+import damageblob
 
-#SSL if puffy player touches any enemy
-def test_collision(sprite1, sprite2):
-    if sprite1 != sprite2:
-        collide_rect = sprite1.rect.inflate(TILESIZE*2, TILESIZE*2)
-        return sprite2.rect.colliderect(collide_rect)
-    else:
-        return False
 class Direction(Enum):
     UP = 0
     DOWN = 1
@@ -48,13 +42,6 @@ class Player(sprite.Sprite):
         self.health = PLAYERHEALTH
         self.damage = PLAYERHITDMG
 
-    # checks for collisions between player and wall sprites in future direction
-    def check_collide(self):
-        for thing in self.groups()[0]:
-            if isinstance(thing, Wall) and (thing.x == self.x + self.dx and thing.y == self.y + self.dy):
-                return True
-        return False
-
     # makes the player coordinates into actual sprite properties
     def make_cam_pos(self):
         self.rect.x = self.x * TILESIZE
@@ -65,23 +52,49 @@ class Player(sprite.Sprite):
         self.x += self.dx
         self.y += self.dy
 
+    def draw_health(self):
+        if self.health > 70:
+            col = GREEN
+        elif self.health > 40:
+            col = YELLOW
+        else:
+            col = RED
+        width = int(self.rect.width * self.health/100)
+        self.health_bar = Rect(0, 0, width, 5)
+        draw.rect(self.image, col, self.health_bar)
+
     # SSL
     # when player and enemy are within certain distance, freeze both and make them fight each other
-    def should_start_battle(self, all_enemies):
+    def should_start_battle(self, target):
         # Detect proximity with enemy to decide if battle starts
-        enemy = pygame.sprite.spritecollideany(self, all_enemies, collided=test_collision)
-        return enemy
+        engaged_enemy = sprite.spritecollideany(self, target, collided=self.test_collision)
+        return engaged_enemy
 
     # SSL, debugged by SSL
     def take_damage(self, damage):
-        if (damage >= self.health):
+        if damage >= self.health:
             self.health = 0
         else:
             self.health = self.health - damage
 
     # SSL, debugged by SSL
     def is_dead(self):
-        if self.health == 0:
+        if self.health <= 0:
             return True
+        else:
+            return False
+
+    # checks for collisions between player and wall sprites in future direction
+    def check_collide(self):
+        for thing in self.groups()[0]:
+            if isinstance(thing, Wall) and (thing.x == self.x + self.dx and thing.y == self.y + self.dy):
+                return True
+        return False
+
+    # SSL if puffy player touches any enemy
+    def test_collision(self, sprite2):
+        if self != sprite2:
+            collide_rect = self.rect.inflate(TILESIZE * 2, TILESIZE * 2)
+            return sprite2.rect.colliderect(collide_rect)
         else:
             return False
