@@ -43,7 +43,7 @@ class Enemy(sprite.Sprite):
         self.can_attack = True
 
         # Fill in later
-
+#SSL rectangles around enemy sprites
     def make_cam_pos(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
@@ -70,14 +70,14 @@ class Enemy(sprite.Sprite):
         self.health_bar = Rect(-3, 0, width, 5)
         draw.rect(self.image, col, self.health_bar)
 
-    # SSL
+    # SSL enemy damage function
     def take_damage(self, damage):
         if damage >= self.health:
             self.health = 0
         else:
             self.health -= damage
 
-    # SSL
+    # SSL enemy death function
     def is_dead(self):
         if self.health <= 0:
             return True
