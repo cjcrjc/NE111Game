@@ -6,7 +6,9 @@ cjcrjc
 sophiastl
 14k5hm1
 
-Disclaimer: Devaney had issues with her technology, so some of the commits on GitHub are her work done on others devices and accounts.
+Disclaimer: 14k5hm1 had issues with her technology, so some of the commits on GitHub are her work done on others devices and accounts.
+
+Disclaimer: all map image files are located in the "maptiles" foler, and all other images are in the repository.
 
 Important Downloads:
 TIled Map Editor (In order to view map file and tilesets):
