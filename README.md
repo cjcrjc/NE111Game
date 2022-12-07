@@ -13,3 +13,8 @@ TIled Map Editor (In order to view map file and tilesets):
 https://thorbjorn.itch.io/tiled/download/eyJpZCI6Mjg3NjgsImV4cGlyZXMiOjE2NzAzNzYzNzB9.o%2fdKLPWFf7uLH9H2BEWvFz9JqH0%3d
 
 This editor is required to be downloaded in order to use the map in the game. The files required are in the game repository.
+
+Imports Needed:
+Pygame
+Pytmx
+pytmx.util_pygame
